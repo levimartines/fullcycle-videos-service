@@ -16,5 +16,5 @@ class Genre extends Model
     protected $casts = [
         'id' => "string"
     ];
-    public $incrementing = true;
+    public $incrementing = false;
 }
