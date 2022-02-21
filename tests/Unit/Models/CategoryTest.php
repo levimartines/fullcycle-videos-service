@@ -30,14 +30,12 @@ class CategoryTest extends TestCase
     {
         $traits = [HasFactory::class, SoftDeletes::class, Uuid::class];
         $categoryTraits = array_keys(class_uses(Category::class));
-        foreach ($traits as $trait) {
-            $this->assertContains($trait, $categoryTraits);
-        }
+        $this->assertEqualsCanonicalizing($traits, $categoryTraits);
     }
 
     public function test_casts()
     {
-        $casts = ['id' => "string", 'deleted_at' => "datetime"];
+        $casts = ['id' => 'string', 'deleted_at' => 'datetime', 'is_active' => 'boolean'];
         $this->category = new Category();
         $this->assertEquals($casts, $this->category->getCasts());
     }
@@ -52,10 +50,7 @@ class CategoryTest extends TestCase
     {
         $dates = ['deleted_at', 'created_at', 'updated_at'];
         $this->category = new Category();
-        foreach ($dates as $date) {
-            $this->assertContains($date, $this->category->getDates());
-        }
-        $this->assertCount(count($dates), $this->category->getDates());
+        $this->assertEqualsCanonicalizing($dates, $this->category->getDates());
     }
 
 }
